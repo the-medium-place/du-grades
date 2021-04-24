@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "@google-cloud/storage": "^5.8.4",
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "googleapis": "^39.2.0",
+    "inquirer": "^8.0.0"
+  },
+  "name": "denver-stuff",
+  "description": "",
+  "version": "1.0.0",
+  "main": "bcsapi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bcsapi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-medium-place/denver-stuff.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/the-medium-place/denver-stuff/issues"
+  },
+  "homepage": "https://github.com/the-medium-place/denver-stuff#readme"
+}
