@@ -5,9 +5,8 @@ require('dotenv').config()
 const getAuthToken = require('./getAuthToken')
 const { copyFileToGCS, getPublicUrl } = require('./updateSheets')
 
+getGradeData();
 
-
-// FIXME: GET GRADE INFO
 async function getGradeData() {
     // GET AUTHORIZATION TOKEN FOR ALL DATA RETRIEVAL
     // ****SET BCS USER EMAIL AND PASSWORD IN getAuthToken.js****
@@ -37,7 +36,6 @@ async function getGradeData() {
         const assignmentArr = makeStudentGradeObjects(res.data).assignmentArr;
         const assignmentStr = assignmentArr.join(',')
         const newDate = new Date().toString().split(" ").join("-")
-
         const fileName = `${newDate}-grades.csv`
 
         fs.writeFile(fileName, 'NAME,AVERAGE,' + assignmentStr, function (err) {
@@ -62,15 +60,12 @@ async function getGradeData() {
             })
         })
         setTimeout(() => {
-
-            goAgain(fileName);
-
+            uploadPrompt(fileName);
         }, 1500);
-
     }).catch(err => console.log(err))
 }
 
-function goAgain(fileName) {
+function uploadPrompt(fileName) {
     console.log("\n\n===================================\n\n")
     if (fs.existsSync('./' + fileName)) {
         inquirer.prompt([
@@ -82,7 +77,7 @@ function goAgain(fileName) {
         ]).then(resp => {
             if (resp.isUpload) {
                 copyFileToGCS(`./${fileName}`, process.env.GOOGLE_BUCKET_NAME, {})
-                console.log('File Uploaded!')
+                    .then(console.log(`File Upload SUCCESS!\n${getPublicUrl(process.env.GOOGLE_BUCKET_NAME, `./${fileName}`)}`))
             } else {
                 console.log('Bye!')
                 return;
@@ -91,9 +86,7 @@ function goAgain(fileName) {
     } else {
         console.log(fileName + ' does not exist yet!')
     }
-
 }
-
 
 function makeStudentGradeObjects(gradesArr) {
 
@@ -112,7 +105,6 @@ function makeStudentGradeObjects(gradesArr) {
         'D-': 12,
         'F': 13,
         'I': 14
-
     }
 
     const studentObj = {};
@@ -135,7 +127,6 @@ function makeStudentGradeObjects(gradesArr) {
 }
 
 
-getGradeData();
 
 
 // GET USER INFO ABOUT ME - ZAC - INCLUDING WHICH COURSES I'M 
@@ -148,3 +139,4 @@ getGradeData();
 //         'authToken': authToken
 //     },
 // }).then(res => console.log(res.json()))
+

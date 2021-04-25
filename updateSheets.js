@@ -33,9 +33,6 @@ copyFileToGCS = (localFilePath, bucketName, options) => {
 
     return bucket.upload(localFilePath, options)
         .then(() => file.makePublic())
-        .then(() => getPublicUrl(bucketName, fileName));
 };
 
-
 module.exports = { copyFileToGCS, getPublicUrl }
-
