@@ -17,7 +17,9 @@ async function getGradeData() {
     // API CALL SETUP
     const gradesURL = 'https://bootcampspot.com/api/instructor/v1/grades';
     const payload = {
-        courseId: 3160 // COURSE ID CAN BE FOUND BY GETTING INFORMATION ('.../me' call) AND VIEWING ASSOCIATED COHORTS
+        // COURSE ID CAN BE FOUND BY GETTING YOUR INSTRUCTOR INFO INFORMATION -
+        // (SEE getInstructoInfo.js) AND VIEWING ASSOCIATED COHORTS
+        courseId: parseInt(process.env.COURSE_ID)
     }
     const config = {
         headers: {
@@ -125,18 +127,3 @@ function makeStudentGradeObjects(gradesArr) {
     // console.log(assignmentArr)
     return { studentObj, assignmentArr }
 }
-
-
-
-
-// GET USER INFO ABOUT ME - ZAC - INCLUDING WHICH COURSES I'M 
-// ASSOCIATED WITH
-
-// fetch("https://bootcampspot.com/api/instructor/v1/me", {
-//     method: 'GET',
-//     headers: {
-//         'Content-Type': 'application/json',
-//         'authToken': authToken
-//     },
-// }).then(res => console.log(res.json()))
-
