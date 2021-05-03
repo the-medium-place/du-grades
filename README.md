@@ -5,14 +5,14 @@ This application is used to access the [BootCampSpot](http://www.bootcampspot.co
 ## Usage
 
 ### **Requirements:**
-    * BCS Instructor account (login Email and Password required to retrieve BCS API Auth Token)
-    * Google Sheets spreadsheet (and spreadsheet ID, which can be found in the URL of the sheet)
-    * Google App connected to above spreadsheet to automate import of .csv file from Google Storage Bucket to Sheets
-        * [Quickstart Guide](https://codelabs.developers.google.com/codelabs/cloud-function2sheet#0) to create such an app
-        * App must have enabled Google Sheets API and Google Cloud Storage JSON API
-        * App must have associated Storage Bucket set to public access and 'fine-grained' access control
-    * Service Account Key for Google App to access App resources (storage bucket, etc)
-        * Key and other authorization info should be saved in a root-level `.json` file, and will be auto-generated when you 'create credentials' for your service account on the Google Cloud Console
+* BCS Instructor account (login Email and Password required to retrieve BCS API Auth Token)
+* Google Sheets spreadsheet (and spreadsheet ID, which can be found in the URL of the sheet)
+* Google App connected to above spreadsheet to automate import of .csv file from Google Storage Bucket to Sheets
+    * [Quickstart Guide](https://codelabs.developers.google.com/codelabs/cloud-function2sheet#0) to create such an app
+    * App must have enabled Google Sheets API and Google Cloud Storage JSON API
+    * App must have associated Storage Bucket set to public access and 'fine-grained' access control
+* Service Account Key for Google App to access App resources (storage bucket, etc)
+    * Key and other authorization info should be saved in a root-level `.json` file, and will be auto-generated when you 'create credentials' for your service account on the Google Cloud Console
 
 * Once the requirements are met clone this repo to your local machine
 * Create a `.env` file with the following information:
