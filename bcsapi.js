@@ -17,7 +17,7 @@ async function getGradeData() {
     // API CALL SETUP
     const gradesURL = 'https://bootcampspot.com/api/instructor/v1/grades';
     const payload = {
-        // COURSE ID CAN BE FOUND BY GETTING YOUR INSTRUCTOR INFO INFORMATION -
+        // COURSE ID CAN BE FOUND BY GETTING YOUR INSTRUCTOR INFORMATION -
         // (SEE getInstructoInfo.js) AND VIEWING ASSOCIATED COHORTS
         courseId: parseInt(process.env.COURSE_ID)
     }

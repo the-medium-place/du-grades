@@ -13,6 +13,7 @@ This application is used to access the [BootCampSpot](http://www.bootcampspot.co
     * App must have associated Storage Bucket set to public access and 'fine-grained' access control
 * Service Account Key for Google App to access App resources (storage bucket, etc)
     * Key and other authorization info should be saved in a root-level `.json` file, and will be auto-generated when you 'create credentials' for your service account on the Google Cloud Console
+        * **NOTE:** this credentials file must remain private, make sure to add it to your `.gitignore` (the repo automatically ignores any file called `credentials.json`)
 
 * Once the requirements are met clone this repo to your local machine
 * Create a `.env` file with the following information:
