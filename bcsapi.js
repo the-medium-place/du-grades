@@ -45,10 +45,16 @@ async function getGradeData() {
             console.log(`New file "${fileName}" created!!`);
             console.log(`Line 1 written to "${fileName}"`)
         })
+
+        const droppedStudents = ['Daniel Allen', 'Bryan Martinez', 'christopher wilburn', 'Keon Min Park', 'Lu Liu', 'Moses Nsubuga', 'Nancy Quezada rodriguez', 'Pratham Kc', 'Ryan Dugan', 'Shanna Bernstein', 'Max Sandoval', 'Kevin Devlin']
+
         // EACH SUBSEQUENT ROW SHOULD BE STUDENT NAME FOLLOWED BY GRADE VALUES
         // capture student name and grades
         const studentObj = makeStudentGradeObjects(res.data).studentObj
         const studentNames = Object.keys(studentObj)
+        // FILTER OUT STUDENTS WHO HAVE DROPPED/TRANSFERRED (listed in droppedStudents array above)
+        .filter(name => !droppedStudents.includes(name))
+
         // console.log(studentNames)
         // loop through array of names
         studentNames.forEach((student, i) => {
