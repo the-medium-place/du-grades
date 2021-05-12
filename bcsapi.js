@@ -6,7 +6,6 @@ const getAuthToken = require('./getAuthToken')
 const { copyFileToGCS, getPublicUrl } = require('./updateSheets')
 
 getGradeData();
-
 async function getGradeData() {
     // GET AUTHORIZATION TOKEN FOR ALL DATA RETRIEVAL
     // ****SET BCS USER EMAIL AND PASSWORD IN getAuthToken.js****
@@ -17,8 +16,8 @@ async function getGradeData() {
     // API CALL SETUP
     const gradesURL = 'https://bootcampspot.com/api/instructor/v1/grades';
     const payload = {
-        // COURSE ID CAN BE FOUND BY GETTING YOUR INSTRUCTOR INFORMATION -
-        // (SEE getInstructoInfo.js) AND VIEWING ASSOCIATED COHORTS
+        // **COURSE ID CAN BE FOUND BY GETTING YOUR INSTRUCTOR INFO INFORMATION -**
+        // **(SEE getInstructoInfo.js) AND VIEWING ASSOCIATED COHORTS**
         courseId: parseInt(process.env.COURSE_ID)
     }
     const config = {
@@ -37,7 +36,7 @@ async function getGradeData() {
         // FIRST ROW SHOULD BE 'NAME', FOLLOWED BY ALL ASSIGNMENT NAMES
         const assignmentArr = makeStudentGradeObjects(res.data).assignmentArr;
         const assignmentStr = assignmentArr.join(',')
-        const newDate = new Date().toString().split(" ").join("-")
+        const newDate = new Date().toDateString().split(" ").join("-")
         const fileName = `${newDate}-grades.csv`
 
         fs.writeFile(fileName, 'NAME,AVERAGE,' + assignmentStr, function (err) {
@@ -72,19 +71,52 @@ async function getGradeData() {
     }).catch(err => console.log(err))
 }
 
+/**
+   * Prompt user to upload, then upload to Google Sheets
+   * @param {string} fileName - name of file to be uploaded to GSC
+   */
 function uploadPrompt(fileName) {
     console.log("\n\n===================================\n\n")
     if (fs.existsSync('./' + fileName)) {
         inquirer.prompt([
             {
                 type: 'confirm',
-                message: `Upload ${fileName} to storage bucket "${process.env.GOOGLE_BUCKET_NAME}"?`,
+                message: `Upload "${fileName}" to storage bucket "${process.env.GOOGLE_BUCKET_NAME}"?`,
                 name: "isUpload"
             }
         ]).then(resp => {
             if (resp.isUpload) {
                 copyFileToGCS(`./${fileName}`, process.env.GOOGLE_BUCKET_NAME, {})
-                    .then(console.log(`File Upload SUCCESS!\n${getPublicUrl(process.env.GOOGLE_BUCKET_NAME, `./${fileName}`)}`))
+                    .then(console.log(`File Upload SUCCESS!`))
+                    .then(() => deletePrompt(fileName))
+            } else {
+                deletePrompt(fileName)
+                return;
+            }
+        })
+    } else {
+        console.log(fileName + ' does not exist yet!')
+    }
+}
+
+/**
+   * Prompt user to delete, then delete generated .csv file
+   * @param {string} fileName - name of file to be deleted
+   */
+function deletePrompt(fileName) {
+    if (fs.existsSync('./' + fileName)) {
+        inquirer.prompt([
+            {
+                type: 'confirm',
+                message: `Delete file "${fileName}" from local file system?`,
+                name: "isDelete"
+            }
+        ]).then(resp => {
+            if (resp.isDelete) {
+                fs.unlink(`./${fileName}`, err => {
+                    if (err) console.log(err)
+                    console.log("File Deleted!\n====================\nBye!")
+                })
             } else {
                 console.log('Bye!')
                 return;
@@ -95,6 +127,11 @@ function uploadPrompt(fileName) {
     }
 }
 
+/**
+   * Organize student info in to usable object of students with all assignment info
+   * @param {Object} gradesArr - array of objects where each object is a specific student's grade for a specific assignment
+   * @returns {Object} { studentObj, assignmentArr } object of student info and array of all assignment names
+   */
 function makeStudentGradeObjects(gradesArr) {
 
     const grades2nums = {

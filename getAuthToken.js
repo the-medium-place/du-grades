@@ -1,7 +1,11 @@
 const axios = require('axios')
 require('dotenv').config()
 
-// GET LOGIN AUTH TOKEN
+/**
+   * Retrieves login token -
+   * Necessary for retrieval of data from BootcampSpot API
+   * @return {string} token value string
+   */
 module.exports = async function getAuthToken() {
 
     // SET email AND password TO BCS LOGIN INFO
