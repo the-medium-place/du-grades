@@ -12,7 +12,7 @@ const storage = new Storage({
    * @param {string} fileName
    * @return {string}
    */
-getPublicUrl = (bucketName, fileName) => `https://storage.googleapis.com/${bucketName}/${fileName}`;
+const getPublicUrl = (bucketName, fileName) => `https://storage.googleapis.com/${bucketName}/${fileName}`;
 
 /**
  * Copy file from local to a GCS bucket.
@@ -23,7 +23,7 @@ getPublicUrl = (bucketName, fileName) => `https://storage.googleapis.com/${bucke
  * @param {Object} [options]
  * @return {Promise.<string>} - The public URL of the uploaded file.
  */
-copyFileToGCS = (localFilePath, bucketName, options) => {
+const copyFileToGCS = (localFilePath, bucketName, options) => {
     options = options || {};
 
     const bucket = storage.bucket(bucketName);
