@@ -26,7 +26,7 @@ SERVICE_KEY_FILE_PATH=<< LOCAL FILEPATH TO SERVICE KEY .JSON FILE >>
 ```
 * Once the above is complete, install all dependencies by running `npm install` in the terminal at the repo directory
 * Run the program with `npm start`. You will see an output of each student name as it is saved to the `.csv` file.
-* The generated file will be named starting with the current date and time, followed by `-grades.csv` (ex: `Sat-Apr-24-2021-11:22:07-GMT-0700-(Pacific-Daylight-Time)-grades.csv`). 
+* The generated file will be named starting with the current date and time, followed by `-grades.csv` (ex: `Sat-Apr-24-2021-grades.csv`). 
 * After the file is generated, you will be prompted to upload the file to the connected Google Storage Bucket
 
 ## Questions: 
