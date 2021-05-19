@@ -5,12 +5,11 @@ const getAuthToken = require('./getAuthToken')
 const { uploadPrompt } = require('./uploadAndDelete')
 const makeStudentGradeObjects = require("./makeStudentGradeObjects")
 
-// getGradeData();
-async function getGradeData() {
+function getGradeData() {
     // GET AUTHORIZATION TOKEN FOR ALL DATA RETRIEVAL
     // ****SET BCS USER EMAIL AND PASSWORD IN getAuthToken.js****
     console.log("Getting Auth Token...");
-    const authToken = await getAuthToken()
+    const authToken = getAuthToken()
     console.log("AUTH SUCCESS! Accessing BCS API now...")
 
     // API CALL SETUP

@@ -1,12 +1,12 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { copyFileToGCS, getPublicUrl } = require('./updateSheets')
+const { copyFileToGCS } = require('./updateSheets')
 
 /**
    * Prompt user to upload, then upload to Google Sheets
    * @param {string} fileName - name of file to be uploaded to GSC
    */
- function uploadPrompt(fileName) {
+function uploadPrompt(fileName) {
     console.log("\n\n===================================\n\n")
     if (fs.existsSync('./' + fileName)) {
         inquirer.prompt([
@@ -19,7 +19,7 @@ const { copyFileToGCS, getPublicUrl } = require('./updateSheets')
             if (resp.isUpload) {
                 copyFileToGCS(`./${fileName}`, process.env.GOOGLE_BUCKET_NAME, {})
                     .then(console.log(`File Upload SUCCESS!\n============================`))
-                    .then(()=>deletePrompt(fileName))
+                    .then(() => deletePrompt(fileName))
             } else {
                 deletePrompt(fileName)
                 return;
@@ -45,8 +45,8 @@ function deletePrompt(fileName) {
         ]).then(resp => {
             if (resp.isDelete) {
                 fs.unlink(`./${fileName}`, err => {
-                   if (err) console.log(err)
-                   console.log("File Deleted!\n====================\nBye!")
+                    if (err) console.log(err)
+                    console.log("File Deleted!\n====================\nBye!")
                 })
             } else {
                 console.log('Bye!')

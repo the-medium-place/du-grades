@@ -7,12 +7,12 @@ getInstructorInfo();
    * Retrieves info for BootcampSpot instructor - including all related cohorts
    * Logs all retrieved info to console
    */
-async function getInstructorInfo() {
+function getInstructorInfo() {
 
     // GET AUTHORIZATION TOKEN FOR ALL DATA RETRIEVAL
     // ****SET BCS USER EMAIL AND PASSWORD IN getAuthToken.js****
     console.log("Getting Auth Token...");
-    const authToken = await getAuthToken()
+    const authToken = getAuthToken()
     console.log("AUTH SUCCESS! Accessing BCS API now...")
 
     const apiUrl = "https://bootcampspot.com/api/instructor/v1/me";
