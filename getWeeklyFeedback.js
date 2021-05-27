@@ -5,9 +5,7 @@ const fs = require('fs')
 require("dotenv").config()
 
 async function getWeeklyFeedback() {
-    console.log("Getting Auth Token...");
     const authToken = await getAuthToken()
-    console.log("AUTH SUCCESS! Accessing BCS API now...")
 
     const apiUrl = "https://bootcampspot.com/api/instructor/v1/weeklyFeedback";
     const body = {

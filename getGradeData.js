@@ -1,4 +1,5 @@
 const fs = require('fs');
+const inquirer = require("inquirer")
 const axios = require('axios').default;
 require('dotenv').config()
 const getAuthToken = require('./getAuthToken')
@@ -8,9 +9,7 @@ const makeStudentGradeObjects = require("./makeStudentGradeObjects")
 async function getGradeData() {
     // GET AUTHORIZATION TOKEN FOR ALL DATA RETRIEVAL
     // ****SET BCS USER EMAIL AND PASSWORD IN getAuthToken.js****
-    console.log("Getting Auth Token...");
     const authToken = await getAuthToken()
-    console.log("AUTH SUCCESS! Accessing BCS API now...")
 
     // API CALL SETUP
     const gradesURL = 'https://bootcampspot.com/api/instructor/v1/grades';
