@@ -4,7 +4,7 @@ const { copyFileToGCS } = require('./updateSheets')
 
 /**
    * Prompt user to upload, then upload to Google Sheets
-   * @param {string} fileName - name of file to be uploaded to GSC
+   * @param {string} fileName - name of file to be uploaded to GCS
    */
 function uploadPrompt(fileName) {
     console.log("\n\n===================================\n\n")
@@ -46,10 +46,12 @@ function deletePrompt(fileName) {
             if (resp.isDelete) {
                 fs.unlink(`./${fileName}`, err => {
                     if (err) console.log(err)
-                    console.log("File Deleted!\n====================\nBye!")
+                    console.log("File Deleted!\n====================\n")
+                    
                 })
             } else {
                 console.log('Bye!')
+                
                 return;
             }
         })
@@ -58,4 +60,6 @@ function deletePrompt(fileName) {
     }
 }
 
-module.exports = { uploadPrompt, deletePrompt }
+
+
+module.exports = uploadPrompt

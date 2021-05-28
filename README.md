@@ -13,7 +13,7 @@ This application is used to access the [BootCampSpot](http://www.bootcampspot.co
     * App must have associated Storage Bucket set to public access and 'fine-grained' access control
 * Service Account Key for Google App to access App resources (storage bucket, etc)
     * Key and other authorization info should be saved in a root-level `.json` file, and will be auto-generated when you 'create credentials' for your service account on the Google Cloud Console
-        * **NOTE:** this credentials file must remain private, make sure to add it to your `.gitignore` (the repo automatically ignores any file called `credentials.json`)
+        * **NOTE:** this credentials file **must remain private**, make sure to add it to your `.gitignore` (the repo automatically ignores any file called `credentials.json`)
 
 * Once the requirements are met clone this repo to your local machine
 * Create a `.env` file with the following information:
@@ -23,8 +23,10 @@ BCS_PASSWORD=<< YOUR BOOTCAMP SPOT SECRET PASSWORD >>
 GOOGLE_BUCKET_NAME=<< NAME OF YOUR GOOGLE APP STORAGE BUCKET >>
 PROJECT_ID=<< PROJECT ID OF GOOGLE APP >>
 SERVICE_KEY_FILE_PATH=<< LOCAL FILEPATH TO SERVICE KEY .JSON FILE >>
-COURSE_ID=<< COURSE ID CAN BE FOUND RUNNING getInstructorInfo.js >>
+COURSE_ID=<< COURSE ID CAN BE FOUND RUNNING npm run courses IN THE TERMINAL >>
 ```
+**NOTE: To view the 'course ID' of all cohorts you are associated with, run `npm run courses` in the terminal. This wil ouput a table with course information needed to update `.env`**
+
 * Once the above is complete, install all dependencies by running `npm install` in the terminal at the repo directory
 * Run the program with `npm start`. You will be prompted to download either student *grade* information or *weekly feedback* information.
 * The generated file will be named starting with the current date, followed by `-grades.csv` (ex: `Sat-Apr-24-2021-grades.csv`). 

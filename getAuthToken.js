@@ -21,13 +21,13 @@ module.exports = async function getAuthToken() {
             'Content-Type': 'application/json',
         }
     }
-    const token = await axios.post("https://bootcampspot.com/api/instructor/v1/login", loginBody, config)
-        .then(res => {
-            console.log("AUTH SUCCESS! Accessing BCS API now...")
-            return res.data.authenticationInfo.authToken
 
-        })
-        .catch(err => console.log("AUTH FAILURE! \n===========================\n", err))
-
-    return token;
+    try {
+        const res = await axios.post("https://bootcampspot.com/api/instructor/v1/login", loginBody, config)
+        console.log("AUTH SUCCESS! Accessing BCS API now...\n============================\n")
+        const token = res.data.authenticationInfo.authToken
+        return token;
+    } catch (err) {
+        console.log("AUTH FAILURE! \n===========================\n", err)
+    }
 }

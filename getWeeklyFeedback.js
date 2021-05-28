@@ -1,10 +1,11 @@
 const axios = require("axios");
 const getAuthToken = require('./getAuthToken')
-const { uploadPrompt } = require('./uploadAndDelete')
+const uploadPrompt = require('./uploadAndDelete')
 const fs = require('fs')
 require("dotenv").config()
 
 async function getWeeklyFeedback() {
+
     const authToken = await getAuthToken()
 
     const apiUrl = "https://bootcampspot.com/api/instructor/v1/weeklyFeedback";
@@ -14,15 +15,16 @@ async function getWeeklyFeedback() {
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            'authToken': authToken
+            authToken
         }
     }
 
-    axios.post(apiUrl, body, config)
-        .then(res => {
-            makeFeedbackCSV(res.data)
-        })
-        .catch(err => console.log(err))
+    try {
+        const res = await axios.post(apiUrl, body, config)
+        makeFeedbackCSV(res.data)
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 function makeFeedbackCSV(data) {

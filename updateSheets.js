@@ -23,8 +23,7 @@ const getPublicUrl = (bucketName, fileName) => `https://storage.googleapis.com/$
  * @param {Object} [options]
  * @return {Promise}The public URL of the uploaded file.
  */
-const copyFileToGCS = (localFilePath, bucketName, options) => {
-    options = options || {};
+const copyFileToGCS = (localFilePath, bucketName, options = {}) => {
 
     const bucket = storage.bucket(bucketName);
     // const fileName = path.basename(localFilePath)÷\;
