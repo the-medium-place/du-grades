@@ -6,9 +6,8 @@ const getAssignmentInfo = require("./getAssignmentInfo")
    */
 module.exports = async function makeStudentGradeObjects(gradesArr) {
 
-    const assignmentData = await getAssignmentInfo(); // object { 'assignment name':'assignment due date'}
+    const assignmentData = await getAssignmentInfo(); // object of all assignments formatted as - { 'assignment name':'assignment due date (in ms)'}
     // console.log(assignmentData)
-    // console.log("current time test: ", Date.now())
     const grades2nums = {
         'A+': 1,
         'A': 2,
@@ -29,7 +28,12 @@ module.exports = async function makeStudentGradeObjects(gradesArr) {
     const studentObj = {};
     const assignmentArr = [];
     const now = Date.now();
-    gradesArr.forEach(gradeObj => {
+    // remove career services milestones and prework from array
+    const newGradesArr = gradesArr.filter(gradeObj => gradeObj.assignmentTitle.split(' ')[0] !== 'Milestone:' && gradeObj.assignmentTitle.split(' ')[0] !== '0:' && gradeObj.assignmentTitle.split(' ')[0] !== 'Intro')
+    newGradesArr.sort(naturalCompare)
+    console.log("newGradesArr: ", newGradesArr)
+
+    newGradesArr.forEach(gradeObj => {
         const isDue = assignmentData[gradeObj.assignmentTitle] < now
         // console.log("TEST!!!!===================\n", assignmentData[gradeObj.assignmentTitle] < Date.now())
         if (!studentObj[gradeObj.studentName]) {
@@ -42,13 +46,28 @@ module.exports = async function makeStudentGradeObjects(gradesArr) {
             name: gradeObj.assignmentTitle,
             submitted: gradeObj.submitted ? 'yes' : 'no',
             // grade: grades2nums[gradeObj.grade] || '',
-            grade: gradeObj.grade && isDue ? grades2nums[gradeObj.grade] : !gradeObj.grade && isDue ? 15 : '',
-            // isDue: assignmentData[gradeObj.assignmentTitle] < now
+            grade: gradeObj.grade && isDue ? grades2nums[gradeObj.grade] : !gradeObj.grade && isDue ? 15 : grades2nums[gradeObj.grade] || '',
         })
     })
-    // studentObj['Ezequiel Herrera'].assignments.forEach(ass => {
-    //     console.log(ass)
-    // })
+
     // console.log(assignmentArr)
     return { studentObj, assignmentArr }
+}
+
+function naturalCompare(a, b) {
+    a = a.assignmentTitle
+    b = b.assignmentTitle
+    var ax = [], bx = [];
+
+    a.replace(/(\d+)|(\D+)/g, function (_, $1, $2) { ax.push([$1 || Infinity, $2 || ""]) });
+    b.replace(/(\d+)|(\D+)/g, function (_, $1, $2) { bx.push([$1 || Infinity, $2 || ""]) });
+
+    while (ax.length && bx.length) {
+        var an = ax.shift();
+        var bn = bx.shift();
+        var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+        if (nn) return nn;
+    }
+
+    return ax.length - bx.length;
 }
