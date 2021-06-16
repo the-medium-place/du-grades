@@ -29,20 +29,22 @@ async function getGradeData() {
     // ========================
     try {
         const res = await axios.post(gradesURL, payload, config)
+        // console.log(res.data)
         console.log("API request SUCCESS! Building .CSV now...\n================================================\n")
 
         makeGradeCSV(res)
 
     } catch (err) {
 
-        console.log("API Request FAILURE: \n==========================\n",err)
+        console.log("API Request FAILURE: \n==========================\n", err)
     }
 
 }
 
-function makeGradeCSV(res){
+async function makeGradeCSV(res) {
 
-    const assignmentArr = makeStudentGradeObjects(res.data).assignmentArr;
+    const studentGradeObjects = await makeStudentGradeObjects(res.data);
+    const assignmentArr = studentGradeObjects.assignmentArr;
     const assignmentStr = assignmentArr.join(',')
     const newDate = new Date().toDateString().split(" ").join("-")
     const fileName = `${newDate}-grades.csv`
@@ -58,7 +60,7 @@ function makeGradeCSV(res){
     // EACH SUBSEQUENT ROW SHOULD BE STUDENT NAME FOLLOWED BY GRADE VALUES
     // capture student name and grades
     // FILTER OUT STUDENTS WHO HAVE DROPPED/TRANSFERRED (listed in droppedStudents array above)
-    const studentObj = makeStudentGradeObjects(res.data).studentObj
+    const studentObj = studentGradeObjects.studentObj
     const studentNames = Object.keys(studentObj).filter(name => !droppedStudents.includes(name))
 
     // console.log(studentNames)
@@ -66,7 +68,8 @@ function makeGradeCSV(res){
     studentNames.forEach((student) => {
         let csvStr = '\n' + student + `,=ROUND(AVERAGE(INDIRECT("C" & Row()):INDIRECT("AE" & Row())))`;
         studentObj[student].assignments.forEach(assignment => {
-            csvStr += (',' + assignment.grade)
+            csvStr += ','
+            csvStr += assignment.grade
         })
         fs.appendFile(fileName, csvStr, function (err) {
             if (err) throw err;

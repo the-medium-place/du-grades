@@ -54,7 +54,8 @@ function makeFeedbackCSV(data) {
     data.submissions.forEach(submitObj => {
         let csvLine = [submitObj.username];
         submitObj.answers.forEach(answerObj => {
-            const value = answerObj.answer ? `"${answerObj.answer.value.replaceAll('"', "'")}"` : ''
+            console.log(answerObj.answer)
+            const value = answerObj.answer ? `"${answerObj.answer.value.replace(/"/g, "'")}"` : ''
             csvLine.push(value)
         })
         // console.log("length of csvLine array: ", csvLine.length)

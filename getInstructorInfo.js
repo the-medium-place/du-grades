@@ -31,6 +31,7 @@ async function getInstructorInfo() {
                 const infoObj = {}
                 infoObj["Course Code"] = courseObj.course.code;
                 infoObj["Course ID"] = courseObj.courseId;
+                infoObj["Enrollment ID"] = courseObj.id
                 resArr.push(infoObj)
             })
             console.table(resArr);
