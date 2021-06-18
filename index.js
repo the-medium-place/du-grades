@@ -11,7 +11,7 @@ inquirer.prompt([
         choices: ["Download Student Grade Data", "Download Student Feedback Data", "Quit"]
     }
 ]).then(res => {
-    console.log(res)
+    // console.log(res)
     if (res.gradesOrFeedback === 'Download Student Grade Data') {getGradeData()}
     else if (res.gradesOrFeedback === "Download Student Feedback Data") {getWeeklyFeedback();}
     else if (res.gradesOrFeedback === 'Quit') {console.log("Bye!")}

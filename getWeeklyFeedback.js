@@ -28,8 +28,8 @@ async function getWeeklyFeedback() {
 }
 
 function makeFeedbackCSV(data) {
-    console.log('the date: ', data.submissions[1].date)
-    console.log('the converted date: ', new Date(data.submissions[1].date).toUTCString().substr(0, 16).replace(',', ''))
+    // console.log('the date: ', data.submissions[1].date)
+    // console.log('the converted date: ', new Date(data.submissions[1].date).toUTCString().substr(0, 16).replace(',', ''))
     let csvLine1 = ["NAME"];
 
     const newDate = new Date(data.submissions[1].date)
@@ -54,7 +54,7 @@ function makeFeedbackCSV(data) {
     data.submissions.forEach(submitObj => {
         let csvLine = [submitObj.username];
         submitObj.answers.forEach(answerObj => {
-            console.log(answerObj.answer)
+            // console.log(answerObj.answer)
             const value = answerObj.answer ? `"${answerObj.answer.value.replace(/"/g, "'")}"` : ''
             csvLine.push(value)
         })

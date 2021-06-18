@@ -11,9 +11,7 @@ async function getInstructorInfo() {
 
     // GET AUTHORIZATION TOKEN FOR ALL DATA RETRIEVAL
     // ****SET BCS USER EMAIL AND PASSWORD IN getAuthToken.js****
-    // console.log("Getting Auth Token...");
     const authToken = await getAuthToken()
-    // console.log("AUTH SUCCESS! Accessing BCS API now...")
 
     const apiUrl = "https://bootcampspot.com/api/instructor/v1/me";
     const config = {

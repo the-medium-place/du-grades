@@ -31,7 +31,7 @@ module.exports = async function makeStudentGradeObjects(gradesArr) {
     // remove career services milestones and prework from array
     const newGradesArr = gradesArr.filter(gradeObj => gradeObj.assignmentTitle.split(' ')[0] !== 'Milestone:' && gradeObj.assignmentTitle.split(' ')[0] !== '0:' && gradeObj.assignmentTitle.split(' ')[0] !== 'Intro')
     newGradesArr.sort(naturalCompare)
-    console.log("newGradesArr: ", newGradesArr)
+    // console.log("newGradesArr: ", newGradesArr)
 
     newGradesArr.forEach(gradeObj => {
         const isDue = assignmentData[gradeObj.assignmentTitle] < now
